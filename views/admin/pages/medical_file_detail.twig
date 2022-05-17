@@ -1,0 +1,594 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Medical Files / <strong
+                                    class="text-primary small">{{ medicalFile.first_name }} {{ medicalFile.last_name }}</strong>
+                            </h3>
+                            <div class="nk-block-des text-soft">
+                                <ul class="list-inline">
+                                    <li>File ID: <span class="text-base">{{ medicalFile.id }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('successHealth')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successHealth') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorHealth')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorHealth') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successEditMedicalFile')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successEditMedicalFile') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorEditMedicalFile')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorEditMedicalFile') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successAddPrescription')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successAddPrescription') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorAddPrescription')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorAddPrescription') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successDeleteHealth')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successDeleteHealth') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorDeleteHealth')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorDeleteHealth') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorUpdatePrescription')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorUpdatePrescription') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successUpdatePrescription')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successUpdatePrescription') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorUpdateQr')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorUpdateQr') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successUpdateQr')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successUpdateQr') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <div class="card-aside-wrap">
+                            <div class="card-content">
+                                <ul class="nav nav-tabs nav-tabs-mb-icon nav-tabs-card" id="nav-tab">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#nav-personal">
+                                            <em class="icon ni ni-user-circle"></em><span>Personal</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#nav-health">
+                                            <em class="icon fas fa-hand-holding-medical"></em><span>Health</span></a>
+                                    </li>
+                                </ul><!-- .nav-tabs -->
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="card-inner tab-pane fade show active" id="nav-personal">
+                                        <div class="nk-block">
+                                            <div class="nk-block-head nk-block-head-sm nk-block-between">
+                                                <h5 class="title">Main Information</h5>
+                                                <div>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#modalDefault">Edit Information
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-warning" data-toggle="modal"
+                                                            data-target="#modalReGenerateQRImage">
+                                                        Re-generate QR image
+                                                    </button>
+                                                </div>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="profile-ud-list">
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">First Name</span>
+                                                        <span
+                                                            class="profile-ud-value">{{ medicalFile.first_name }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Last Name</span>
+                                                        <span
+                                                            class="profile-ud-value">{{ medicalFile.last_name }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Birthday</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.birthday }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Gender</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.gender }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Phone</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.phone }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Email</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.email }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Identity card</span>
+                                                        <span
+                                                            class="profile-ud-value">{{ medicalFile.identity_card }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Province/City</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.province }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">District</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.district }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Wards</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.wards }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">House number/Way</span>
+                                                        <span class="profile-ud-value">{{ medicalFile.way }}</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .profile-ud-list -->
+                                        </div><!-- .nk-block -->
+                                        <div class="nk-block">
+                                            <div class="nk-block-head nk-block-head-line">
+                                                <h6 class="title overline-title text-base">Other Information</h6>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="profile-ud-list">
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Have Health Insurance</span>
+                                                        <span class="profile-ud-value">
+                                                        <span
+                                                            class="badge badge-{{ medicalFile.health_insurance == '0' ? 'danger' : 'success' }}">{{ medicalFile.health_insurance == '0' ? 'Not Health Insurance' : 'Health Insurance' }}</span>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item"></div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Health Insurance number</span>
+                                                        <span
+                                                            class="profile-ud-value">{{ medicalFile.health_insurance_number }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">Expiration date</span>
+                                                        <span
+                                                            class="profile-ud-value">{{ medicalFile.expiration_date }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-ud-item">
+                                                    <div class="profile-ud wider">
+                                                        <span class="profile-ud-label">QR</span>
+                                                        <span class="profile-ud-value"><img
+                                                                src="{{ createLink('upload/qr_images/') }}{{ medicalFile.qr_image }}"
+                                                                alt="Qr image"/></span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .profile-ud-list -->
+                                        </div><!-- .nk-block -->
+                                        <div class="nk-divider divider md"></div>
+                                        <!-- Modal Content Code -->
+                                        <div class="modal fade" tabindex="-1" id="modalDefault">
+                                            <div class="modal-dialog modal-xl" role="document">
+                                                <div class="modal-content">
+                                                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <em class="icon ni ni-cross"></em>
+                                                    </a>
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Edit Information</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ redirect('admin/post-medical-file-edit') }}"
+                                                              method="post">
+                                                            <input type="text" hidden name="medical-file-id"
+                                                                   value="{{ medicalFile.id }}">
+                                                            <input type="text" hidden name="insurance-id"
+                                                                   value="{{ medicalFile.insurance_id }}">
+                                                            <div class="card-inner">
+                                                                <div class="preview-block">
+                                                                    <span class="preview-title-lg overline-title">Main Information</span>
+                                                                    <div class="row gy-4">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="first-name">First
+                                                                                    Name</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="first-name"
+                                                                                           id="first-name"
+                                                                                           placeholder="Enter First Name"
+                                                                                           value="{{ medicalFile.first_name }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="last-name">Last Name</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="last-name"
+                                                                                           id="last-name"
+                                                                                           placeholder="Enter Last Name"
+                                                                                           value="{{ medicalFile.first_name }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="password">Gender</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <div
+                                                                                        class="custom-control custom-radio">
+                                                                                        <input type="radio" id="nam"
+                                                                                               name="gender"
+                                                                                               class="custom-control-input"
+                                                                                               value="Male" checked>
+                                                                                        <label
+                                                                                            class="custom-control-label"
+                                                                                            for="nam">Male</label>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="custom-control custom-radio">
+                                                                                        <input type="radio" id="nu"
+                                                                                               name="gender"
+                                                                                               class="custom-control-input"
+                                                                                               value="Female">
+                                                                                        <label
+                                                                                            class="custom-control-label"
+                                                                                            for="nu">Female</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="birthday">Birthday</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="date"
+                                                                                           class="form-control"
+                                                                                           name="birthday" id="birthday"
+                                                                                           placeholder="Enter Birthday"
+                                                                                           value="{{ medicalFile.birthday }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="phone">Phone</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="phone" id="phone"
+                                                                                           placeholder="Enter Phone"
+                                                                                           value="{{ medicalFile.phone }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="email">Email</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="email"
+                                                                                           class="form-control"
+                                                                                           name="email" id="email"
+                                                                                           placeholder="Enter Email"
+                                                                                           value="{{ medicalFile.email }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="identity-card">Identity
+                                                                                    card</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="identity-card"
+                                                                                           id="identity-card"
+                                                                                           placeholder="Enter Identity card"
+                                                                                           value="{{ medicalFile.identity_card }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="province">Province/City</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="province"
+                                                                                           id="province"
+                                                                                           placeholder="Enter Province/City"
+                                                                                           value="{{ medicalFile.province }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="district">District</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="district"
+                                                                                           id="district"
+                                                                                           placeholder="Enter District"
+                                                                                           value="{{ medicalFile.district }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="wards">Wards</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="wards"
+                                                                                           id="wards"
+                                                                                           placeholder="Enter Wards"
+                                                                                           value="{{ medicalFile.wards }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="house-number">House
+                                                                                    number/Way</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="house-number"
+                                                                                           id="house-number"
+                                                                                           placeholder="Enter House number"
+                                                                                           value="{{ medicalFile.way }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr class="preview-hr">
+                                                                    <span class="preview-title-lg overline-title">Other information</span>
+                                                                    <div class="row gy-4">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="health-insurance-number">Health
+                                                                                    Insurance number</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           name="health-insurance-number"
+                                                                                           id="health-insurance-number"
+                                                                                           placeholder="Enter Health Insurance number"
+                                                                                           value="{{ medicalFile.health_insurance_number }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"
+                                                                                       for="expiration-date">Expiration
+                                                                                    date</label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input type="date"
+                                                                                           class="form-control"
+                                                                                           name="expiration-date"
+                                                                                           id="expiration-date"
+                                                                                           placeholder="Enter Expiration date"
+                                                                                           value="{{ medicalFile.expiration_date }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr class="preview-hr">
+                                                                    <span class="preview-title-lg overline-title">Covid vaccine information</span>
+                                                                    {% for covid_injection in medicalFile.covid_injections %}
+                                                                        <div class="row gy-4">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label"
+                                                                                           for="name-{{ loop.index }}">Injection {{ loop.index }}
+                                                                                        - Name vaccine</label>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="name-{{ loop.index }}"
+                                                                                               id="name-{{ loop.index }}"
+                                                                                               value="{{ covid_injection.type_medicine }}"
+                                                                                               placeholder="Enter name">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label"
+                                                                                           for="date-{{ loop.index }}">Injection {{ loop.index }}
+                                                                                        - Date</label>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <input type="date"
+                                                                                               class="form-control"
+                                                                                               name="date-{{ loop.index }}"
+                                                                                               id="date-{{ loop.index }}"
+                                                                                               value="{{ covid_injection.date }}"
+                                                                                               placeholder="Enter date">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                    <hr class="preview-hr">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <button type="submit"
+                                                                                    class="btn btn-success">Edit
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer bg-light">
+                                                        <span class="sub-text">Modal Footer Text</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .card-inner -->
+                                    <div class="card-inner tab-pane fade" id="nav-health">
+                                        {% include('admin/pages/_healths.twig') %}
+                                    </div><!-- .card-inner -->
+                                </div>
+                            </div><!-- .card-content -->
+                        </div><!-- .card-aside-wrap -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="modalReGenerateQRImage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+                <div class="modal-header">
+                    <h5 class="modal-title">Re-generate QR image</h5>
+                </div>
+                <div class="modal-body">
+                    <h4>Are you sure re-generate QR image?</h4>
+                    <form action="{{ redirect('admin/re-generate-qr') }}" method="post">
+                        <input type="text" hidden value="{{ medicalFile.id }}" name="medical-file-id">
+                        <div class="card-inner">
+                            <div class="preview-block">
+                                <button type="submit" class="btn btn-xl btn-warning" style="margin-right: 10px">
+                                    Generate
+                                </button>
+                                <button class="btn btn-xl btn-secondary js-btn-cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light">
+                    <span class="sub-text">Modal Footer Text</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{% verbatim  %}
+<script src="{% endverbatim  %}{{ createLink('js/dist/medical_file_detail.js')}}{% verbatim  %}"></script>
+{% endverbatim  %}
+{% verbatim  %}
+<script>
+    $(document).ready(() => {
+        const $modalViewDetail = $('#modalDetailHealths');
+        $('.js-health-view-detail').on('click', (event) => {
+            const healthId = $(event.currentTarget).data('health-id');
+            $.when(
+                $.ajax({
+                    url: `ajax-medical-file-health?id=${healthId}`,
+                })).done((response) => {
+                    $modalViewDetail.find('.js-summary').text(response.summary);
+                    $modalViewDetail.find('.js-advice').html(response.note);
+                    $modalViewDetail.find('input[name="health-id"]').attr('value', response.id)
+                    $modalViewDetail.find('input[name="summary"]').attr('value', response.summary)
+                    $modalViewDetail.find('textarea[name="description2"]').text(response.note)
+                    $modalViewDetail.find('input[name="medical-file-id"]').attr('value', response.medical_file_id)
+                    $('#modalDetailHealths').modal('show');
+            });
+        })
+
+        const $modalAddPrescription = $('#modalAddPrescription');
+        $('.js-add-prescription').on('click', function () {
+            const healthId = $(this).data('health-id');
+            $('#add-prescription-form [name="health-id"]').attr('value', healthId);
+            $modalAddPrescription.modal('show')
+        });
+
+        const $modalPrescription = $('#modalPrescription');
+        $('.js-view-prescription').on('click', function () {
+            const healthId = $(this).data('health-id');
+            $.when(
+                $.ajax({
+                    url: `ajax-get-prescription?id=${healthId}`,
+                })).done((response) => {
+                    $modalPrescription.find('.js-full-name').text(response.fullName)
+                    $modalPrescription.find('.js-gender').text(response.gender)
+                    $modalPrescription.find('.js-address').text(response.address)
+                    let template = '';
+                    for (const [key, value] of Object.entries(response.medicineList)) {
+                        template += `<tr>
+                                    <th scope="row">${key}</th>
+                                    <td>${value.name}</td>
+                                    <td>${value.quantity}</td>
+                                    <td>${value.dosage}</td>
+                                </tr>`;
+                     }
+                    $modalPrescription.find('.js-medicine-list').html(template)
+                    $modalPrescription.modal('show')
+            });
+        });
+
+        $('.js-delete-health').on('click', function () {
+            const healthId = $(this).data('health-id');
+            const medicalFileId = $(this).data('medical-file-id');
+            $('#delete-health-form input[name="health-id"]').attr('value', healthId);
+            $('#delete-health-form input[name="medical-file-id"]').attr('value', medicalFileId);
+            $('.js-health-id').text(healthId);
+            $('#modalDeleteHealth').modal('show');
+
+            $('.js-btn-cancel').on('click', (event) => {
+                event.preventDefault();
+                $('#modalDeleteHealth').modal('hide');
+            })
+        })
+
+        $(function() {
+          $('.selectpicker').selectpicker();
+        });
+    })
+
+</script>
+{% endverbatim  %}
+{% endblock %}

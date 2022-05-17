@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Infectious | Coronavirus (COVID 19) Medical HTML Template</title>
+
+		<style>
+			body {
+				background: #f5f5f5;
+				margin-top: 20px;
+			}
+
+			.ui-w-80 {
+				width: 80px !important;
+				height: auto;
+			}
+
+			.btn-default {
+				border-color: rgba(24, 28, 33, 0.1);
+				background: rgba(0, 0, 0, 0);
+				color: #4E5155;
+			}
+
+			label.btn {
+				margin-bottom: 0;
+			}
+
+			.btn-outline-primary {
+				border-color: #26B4FF;
+				background: transparent;
+				color: #26B4FF;
+			}
+
+			.btn {
+				cursor: pointer;
+			}
+
+			.text-light {
+				color: #babbbc !important;
+			}
+
+			.btn-facebook {
+				border-color: rgba(0, 0, 0, 0);
+				background: #3B5998;
+				color: #fff;
+			}
+
+			.btn-instagram {
+				border-color: rgba(0, 0, 0, 0);
+				background: #000;
+				color: #fff;
+			}
+
+			.card {
+				background-clip: padding-box;
+				box-shadow: 0 1px 4px rgba(24, 28, 33, 0.012);
+			}
+
+			.row-bordered {
+				overflow: hidden;
+			}
+
+			.account-settings-fileinput {
+				position: absolute;
+				visibility: hidden;
+				width: 1px;
+				height: 1px;
+				opacity: 0;
+			}
+			.account-settings-links .list-group-item.active {
+				font-weight: bold !important;
+			}
+			html:not(.dark-style) .account-settings-links .list-group-item.active {
+				background: transparent !important;
+			}
+			.account-settings-multiselect ~ .select2-container {
+				width: 100% !important;
+			}
+			.light-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+			.light-style .account-settings-links .list-group-item.active {
+				color: #4e5155 !important;
+			}
+			.material-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+			.material-style .account-settings-links .list-group-item.active {
+				color: #4e5155 !important;
+			}
+			.dark-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(255, 255, 255, 0.03) !important;
+			}
+			.dark-style .account-settings-links .list-group-item.active {
+				color: #fff !important;
+			}
+			.light-style .account-settings-links .list-group-item.active {
+				color: #4E5155 !important;
+			}
+			.light-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+		</style>
+		{{ include('user/components/head.twig') }}
+	</head>
+	<body>
+		{{ include('user/components/menu.twig')}}
+		<div class="container light-style flex-grow-1 container-p-y">
+
+			<center>
+				<h2 class="font-weight-bold py-3 mb-4">
+					Hồ sơ bệnh án
+				</h2>
+			</center>
+
+
+			{% if data_user is empty %}
+				<!-- Trường hợp trường dùng khai báo lần đầu -->
+				<div class="card overflow-hidden">
+					<div class="row no-gutters row-bordered row-border-light">
+						<div class="col-md-3 pt-0">
+							<div class="list-group list-group-flush account-settings-links">
+								<a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="tab-content">
+								{% if(Session.hasFlash('success')) %}
+									<div class="alert alert-success">{{ session.getFlash('success') }}</div>
+								{% endif %}
+								{% if(Session.hasFlash('error')) %}
+									<div class="alert alert-danger">{{ session.getFlash('error') }}</div>
+								{% endif %}
+								<form method="post" method="post" action="{{ redirect('user/post-medican-record') }}">
+									<div class="tab-pane fade active show" id="account-general">
+										<div class="card-body">
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Họ</label>
+												<input type="text" class="form-control mb-1" value="" name="first-name">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Tên</label>
+												<input type="text" class="form-control mb-1" value="" name="last-name">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Giới tính</label>
+												<div class="col-sm-10">
+
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
+														<label class="form-check-label" for="gridRadios1">
+															Nam
+														</label>
+													</div>
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+														<label class="form-check-label" for="gridRadios2">
+															Nữ
+														</label>
+													</div>
+
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">E-mail</label>
+												<input type="text" class="form-control mb-1" value="" name="email">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Ngày sinh</label>
+												<input type="date" class="form-control" value="" name="birthday">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Số điện thoại</label>
+												<input type="text" class="form-control" value="" name="phone">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Đường</label>
+												<input type="text" class="form-control" value="" name="way">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Identity Card</label>
+												<input type="text" class="form-control" value="" name="identity_card">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Tỉnh</label>
+												<input type="text" class="form-control" value="" name="province">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Vắc-xin covid</label>
+												<input type="text" class="form-control" value="" name="covid_vaccination">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Quận</label>
+												<input type="text" class="form-control" value="" name="district">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Phường</label>
+												<input type="text" class="form-control" value="" name="wards">
+											</div>
+											<div class="form-group">
+												<input type="submit" class="btn btn-primary" value="Save changes">
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End insert -->
+			{% else %}
+				<!-- Trường hợp update -->
+				<div class="card overflow-hidden">
+					<div class="row no-gutters row-bordered row-border-light">
+						<div class="col-md-3 pt-0">
+							<div class="list-group list-group-flush account-settings-links">
+								<a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Tổng quan</a>
+
+								<a class="list-group-item list-group-item-action" href="/{{helper.getDirectoryUpload()}}qr_images/{{data_user.qr_image}}" download>
+									<img class="rounded-circle mt-5" width="100%" src="/{{helper.getDirectoryUpload()}}qr_images/{{data_user.qr_image}}" width="90">
+									<center>
+										<h5 style="font-weight:bold">
+											Download Qr Code
+										</h5>
+									</center>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="tab-content">
+								{% if(Session.hasFlash('success')) %}
+									<div class="alert alert-success">{{ session.getFlash('success') }}</div>
+								{% endif %}
+								{% if(Session.hasFlash('error')) %}
+									<div class="alert alert-danger">{{ session.getFlash('error') }}</div>
+								{% endif %}
+								<form method="post" method="post" action="{{ redirect('user/update-medican-record')}}?id_user={{ data_user.user_id }}">
+									<div class="tab-pane fade active show" id="account-general">
+										<div class="card-body">
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">First Name</label>
+												<input type="text" class="form-control mb-1" value="{{ data_user.first_name }}" name="first-name">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">First Name</label>
+												<input type="text" class="form-control mb-1" value="{{ data_user.last_name }}" name="last-name">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Gender</label>
+												<div class="col-sm-10">
+													{% if data_user.gender == 'male' %}
+														<div class="form-check">
+															<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male" checked>
+															<label class="form-check-label" for="gridRadios1">
+																Male
+															</label>
+														</div>
+														<div class="form-check">
+															<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+															<label class="form-check-label" for="gridRadios2">
+																Female
+															</label>
+														</div>
+													{% endif %}
+													{% if data_user.gender == 'female' %}
+														<div class="form-check">
+															<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
+															<label class="form-check-label" for="gridRadios1">
+																Male
+															</label>
+														</div>
+														<div class="form-check">
+															<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female" checked>
+															<label class="form-check-label" for="gridRadios2">
+																Female
+															</label>
+														</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">E-mail</label>
+												<input type="text" class="form-control mb-1" value="{{ data_user.email }}" name="email">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Birthday</label>
+												<input type="date" class="form-control" value="{{ data_user.birthday }}" name="birthday">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Phone</label>
+												<input type="text" class="form-control" value="{{ data_user.phone }}" name="phone">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Way</label>
+												<input type="text" class="form-control" value="{{ data_user.way }}" name="way">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Identity Card</label>
+												<input type="text" class="form-control" value="{{ data_user.identity_card }}" name="identity_card">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Province</label>
+												<input type="text" class="form-control" value="{{ data_user.province }}" name="province">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Covid Vaccination</label>
+												<input type="text" class="form-control" value="{{ data_user.covid_vaccination }}" name="covid_vaccination">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">District</label>
+												<input type="text" class="form-control" value="{{ data_user.district}}" name="district">
+											</div>
+											<div class="form-group">
+												<label class="form-label" style="font-weight:bold">Wards</label>
+												<input type="text" class="form-control" value="{{ data_user.wards}}" name="wards">
+											</div>
+											<div class="form-group">
+												<input type="submit" class="btn btn-primary" value="lưu">
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End update-->
+			{% endif %}
+		</div>
+		{{ include('user/components/footer.twig')}}
+	</body>
+</html>

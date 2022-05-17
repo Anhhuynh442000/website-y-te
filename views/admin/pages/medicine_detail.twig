@@ -1,0 +1,195 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Medicine / <strong
+                                    class="text-primary small">{{ medicine.name }}</strong></h3>
+                            <div class="nk-block-des text-soft">
+                                <ul class="list-inline">
+                                    <li>Medicine ID: <span class="text-base">{{ medicine.id }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('successEditMedicine')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successEditMedicine') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorEditMedicine')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorEditMedicine') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <div class="card-aside-wrap">
+                            <div class="card-content">
+                                <div class="card-inner">
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-sm nk-block-between">
+                                            <h5 class="title">Medicine Information</h5>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#modalDefault">Edit Medicine
+                                            </button>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="profile-ud-list">
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Name</span>
+                                                    <span class="profile-ud-value">{{ medicine.name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Type</span>
+                                                    <span class="profile-ud-value">{{ medicine.type_name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Unit</span>
+                                                    <span class="profile-ud-value">{{ medicine.unit }}</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- .profile-ud-list -->
+                                    </div><!-- .nk-block -->
+                                    <div class="nk-divider divider md"></div>
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-sm nk-block-between">
+                                            <h5 class="title">Description</h5>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="bq-note">
+                                            <div class="bq-note-item">
+                                                <div class="bq-note-text">
+                                                    {% autoescape false %}
+                                                        <p>{{ medicine.description|raw|html_decode }}</p>
+                                                    {% endautoescape %}
+                                                </div>
+                                            </div><!-- .bq-note-item -->
+                                        </div><!-- .bq-note -->
+                                    </div>
+                                    <!-- Modal Content Code -->
+                                    <div class="modal fade" tabindex="-1" id="modalDefault">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <em class="icon ni ni-cross"></em>
+                                                </a>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit Medicine</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ redirect('admin/post-edit-medicine') }}" method="post">
+                                                        <input type="text" hidden name="id" value="{{ medicine.id }}">
+                                                        <div class="card-inner">
+                                                            <div class="preview-block">
+                                                                <span class="preview-title-lg overline-title">Medicine Information</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label"
+                                                                                   for="name">Name</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control"
+                                                                                       name="name"
+                                                                                       id="name"
+                                                                                       value="{{ medicine.name }}"
+                                                                                       placeholder="Enter Name">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label"
+                                                                                   for="type">Type</label>
+                                                                            <div class="form-control-wrap ">
+                                                                                <div class="form-control-select">
+                                                                                    <select class="form-control"
+                                                                                            name="type" id="type">
+                                                                                        <option value="1">Thuốc cảm</option>
+                                                                                        <option value="2">Kháng sinh</option>
+                                                                                        <option value="3">Kháng viêm</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="quantity">Quantity</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control" name="quantity"
+                                                                                       id="quantity" value="{{ medicine.quantity }}" placeholder="Enter quantity">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label"
+                                                                                   for="unit">Unit</label>
+                                                                            <div class="form-control-wrap ">
+                                                                                <div class="form-control-select">
+                                                                                    <select class="form-control"
+                                                                                            name="unit" id="unit">
+                                                                                        <option value="hộp">Hộp</option>
+                                                                                        <option value="viên">Viên</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="description">Description</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <textarea type="text"
+                                                                                          class="form-control"
+                                                                                          name="description"
+                                                                                          id="description"
+                                                                                          placeholder="Enter Last Name">{{ medicine.description|raw }}</textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="preview-hr">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <button type="submit" class="btn btn-success">
+                                                                            Edit medicine
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer bg-light">
+                                                    <span class="sub-text">Modal Footer Text</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-content -->
+                        </div><!-- .card-aside-wrap -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{% verbatim  %}
+    <script>
+          tinymce.init({
+            selector: '#description',
+            skin: false
+          });
+    </script>
+{% endverbatim %}
+{% endblock %}

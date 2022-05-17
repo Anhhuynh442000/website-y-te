@@ -1,0 +1,164 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Contact List</h3>
+                            <div class="nk-block-des text-soft">
+                                <p>You have total {{ total }} contacts.</p>
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('errorDeleteContact')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorDeleteContact') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successDeleteContact')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successDeleteContact') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered card-stretch">
+                        <div class="card-inner-group">
+                            <div class="card-inner position-relative card-tools-toggle">
+                                <div class="card-title-group">
+                                    <div class="card-tools mr-n1">
+                                        <ul class="btn-toolbar gx-1">
+                                            <li>
+                                                <a href="#" class="btn btn-icon search-toggle toggle-search" data-target="search"><em class="icon ni ni-search"></em></a>
+                                            </li><!-- li -->
+                                            <li class="btn-toolbar-sep"></li><!-- li -->
+                                        </ul><!-- .btn-toolbar -->
+                                    </div><!-- .card-tools -->
+                                </div><!-- .card-title-group -->
+                                <div class="card-search search-wrap" data-search="search">
+                                    <div class="card-body">
+                                        <div class="search-content">
+                                            <a href="#" class="search-back btn btn-icon toggle-search" data-target="search"><em class="icon ni ni-arrow-left"></em></a>
+                                            <input type="text" class="form-control border-transparent form-focus-none" placeholder="Search by user or email">
+                                            <button class="search-submit btn btn-icon"><em class="icon ni ni-search"></em></button>
+                                        </div>
+                                    </div>
+                                </div><!-- .card-search -->
+                            </div><!-- .card-inner -->
+                            <div class="card-inner p-0">
+                                <div class="nk-tb-list nk-tb-ulist is-compact">
+                                    <div class="nk-tb-item nk-tb-head">
+                                        <div class="nk-tb-col nk-tb-col-check">
+                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                <input type="checkbox" class="custom-control-input" id="uid">
+                                                <label class="custom-control-label" for="uid"></label>
+                                            </div>
+                                        </div>
+                                        <div class="nk-tb-col"><span class="sub-text">Number</span></div>
+                                        <div class="nk-tb-col"><span class="sub-text">Full name</span></div>
+                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">Email</span></div>
+                                        <div class="nk-tb-col tb-col-sm"><span class="sub-text">Phone</span></div>
+                                        <div class="nk-tb-col nk-tb-col-tools text-right">Action</div>
+                                    </div><!-- .nk-tb-item -->
+                                    {% for contact in contact_list %}
+                                    <div class="nk-tb-item">
+                                        <div class="nk-tb-col nk-tb-col-check">
+                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                <input type="checkbox" class="custom-control-input" id="uid1">
+                                                <label class="custom-control-label" for="uid1"></label>
+                                            </div>
+                                        </div>
+                                        <div class="nk-tb-col tb-col-sm">
+                                            <span>{{ contact.id }}</span>
+                                        </div>
+                                        <div class="nk-tb-col">
+                                            <div class="user-card">
+                                                <div class="user-avatar xs bg-primary">
+                                                    <span>AB</span>
+                                                </div>
+                                                <div class="user-name">
+                                                    <span class="tb-lead">{{contact.full_name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nk-tb-col tb-col-md">
+                                            <span>{{ contact.email }}</span>
+                                        </div>
+                                        <div class="nk-tb-col tb-col-sm">
+                                            <span>{{ contact.phone }}</span>
+                                        </div>
+                                        <div class="nk-tb-col nk-tb-col-tools">
+                                            <ul class="nk-tb-actions gx-2">
+                                                <li>
+                                                    <div class="drodown">
+                                                        <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li><a href="{{ redirect('admin/contact-detail', {'email': contact.email}) }}"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
+                                                                <li class="divider"></li>
+                                                                <li><a href="javascript:void(0);" class="js-delete-contact" data-contact-email="{{ contact.email }}"><em class="icon fas fa-trash-alt"></em><span>Delete contact</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- .nk-tb-item -->
+                                    {% endfor %}
+                                </div><!-- .nk-tb-list -->
+                                <div class="modal zoom" tabindex="-1" id="deleteContact">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                                <em class="icon ni ni-cross"></em>
+                                            </a>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete contact</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Are you sure delete contact?</h4>
+                                                Contact have email <span class="js-contact-email" style="font-weight: bold; font-size: 15px"></span> after being deleted will not be able to recover.
+                                                <form id="delete-contact-form" action="{{ redirect('admin/post-delete-contact') }}" method="post">
+                                                    <input type="text" hidden value="" name="email">
+                                                    <div class="card-inner">
+                                                        <div class="preview-block">
+                                                            <button type="submit" class="btn btn-xl btn-outline-danger" style="margin-right: 10px">Delete</button>
+                                                            <button class="btn btn-xl btn-outline-secondary js-btn-cancel">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer bg-light">
+                                                <span class="sub-text">Modal Footer Text</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .card-inner -->
+                            <div class="card-inner">
+                               <div id="pagination"></div>
+                            </div><!-- .card-inner -->
+                        </div><!-- .card-inner-group -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ createLink('js/dist/contact_list.js')}}"></script>
+{% verbatim  %}
+<script>
+    $('.js-delete-contact').on('click', function () {
+        var email = $(this).data('contact-email');
+        $('#delete-contact-form input[name="email"]').attr('value', email);
+        $('.js-contact-email').text(email);
+        $('#deleteContact').modal('show');
+
+        $('.js-btn-cancel').on('click', (event) => {
+            event.preventDefault();
+            $('#deleteContact').modal('hide');
+        })
+    })
+</script>
+{% endverbatim  %}
+{% endblock %}

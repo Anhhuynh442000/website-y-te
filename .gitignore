@@ -1,0 +1,6 @@
+vendor
+.idea
+.env
+node_modules
+public/js/dist
+cache

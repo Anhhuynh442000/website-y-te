@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Contact</title>
+		{{ include('user/components/head.twig') }}
+	</head>
+
+	<body>
+		<!--::header part start::-->
+		{{ include('user/components/menu.twig')}}
+		<!-- Header part end-->
+
+		<!-- breadcrumb start-->
+			<section class="breadcrumb_part breadcrumb_bg"> <div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>Liên hệ</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb start-->
+
+		<!-- ================ contact section start ================= -->
+		<section class="contact-section section_padding">
+			<div class="container">
+				<div class="d-none d-sm-block mb-5 pb-4">
+					<center>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.4231794298908!2d106.69032532370754!3d10.823067399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174deb3ef536f31%3A0x8b7bb8b7c956157b!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBUUC5IQ00!5e0!3m2!1svi!2s!4v1649744207670!5m2!1svi!2s" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</center>
+
+				</div>
+
+
+				<div class="row">
+					<div class="col-12">
+						<h2 class="contact-title">Get in Touch</h2>
+					</div>
+					<div class="col-lg-8">
+						<form class="form-contact contact_form" action="{{ redirect('post-contact') }}" method="post">
+							{% if(Session.hasFlash('errorContact')) %}
+								<div class="alert alert-danger">{{ session.getFlash('errorContact') }}</div>
+							{% endif %}
+							{% if(Session.hasFlash('successContact')) %}
+								<div class="alert alert-success">{{ session.getFlash('successContact') }}</div>
+							{% endif %}
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input class="form-control" name="title" id="title" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter title'" placeholder='Enter your title'>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input class="form-control" name="fullname" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder='Enter your name'>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input class="form-control" name="age" id="age" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter age'" placeholder='Enter age'>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input class="form-control" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder='Enter email address'>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input class="form-control" name="phone" id="phone" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter phone'" placeholder='Enter phone'>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<textarea class="form-control" id="message" rows="5" name="message" placeholder="Message"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-group mt-3">
+								<input type="submit" class="button button-contactForm btn_1" value="Send Message">
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-4">
+						<div class="media contact-info">
+							<span class="contact-info__icon">
+								<i class="ti-home"></i>
+							</span>
+							<div class="media-body">
+								<h3>Buttonwood, California.</h3>
+								<p>Rosemead, CA 91770</p>
+							</div>
+						</div>
+						<div class="media contact-info">
+							<span class="contact-info__icon">
+								<i class="ti-tablet"></i>
+							</span>
+							<div class="media-body">
+								<h3>00 (440) 9865 562</h3>
+								<p>Mon to Fri 9am to 6pm</p>
+							</div>
+						</div>
+						<div class="media contact-info">
+							<span class="contact-info__icon">
+								<i class="ti-email"></i>
+							</span>
+							<div class="media-body">
+								<h3>support@colorlib.com</h3>
+								<p>Send us your query anytime!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ================ contact section end ================= -->
+
+		<!-- footer part start-->
+
+
+		<!-- footer part end-->
+	{{ include('user/components/footer.twig')}}
+		<!-- jquery plugins here-->
+
+
+	</body>
+
+</html>

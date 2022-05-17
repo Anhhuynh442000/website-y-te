@@ -1,0 +1,84 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Contact Detail / <strong class="text-primary small">Nguyen Van A</strong></h3>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('errorReply')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorReply') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <div class="card-aside-wrap">
+                            <div class="card-content">
+                                <div class="nk-msg-body bg-white profile-shown">
+                                    <div class="nk-msg-head">
+                                        <h4 class="title d-none d-lg-block">Contact</h4>
+                                    </div><!-- .nk-msg-head -->
+                                    <div class="nk-msg-reply nk-reply" data-simplebar>
+                                        <div class="nk-msg-head py-4 d-lg-none">
+                                            <h4 class="title">Unable to select currency when order</h4>
+                                        </div>
+                                        {% for contact in contactForView.contact_list %}
+                                        <div class="nk-reply-item">
+                                            <div class="nk-reply-header">
+                                                <div class="user-card">
+                                                    <div class="user-avatar sm bg-{{ contact.contact_id == null ? 'pink' : 'primary' }}">
+                                                        <span>{{ contact.contact_id == null ? 'C' : 'Y' }}</span>
+                                                    </div>
+                                                    <div class="user-name">{{ contact.email }} <span>{{ contact.contact_id == null ? '(Customer)' : '(You)' }}</span></div>
+                                                </div>
+                                                <div class="date-time">{{ contact.time }}</div>
+                                            </div>
+                                            <div class="nk-reply-body">
+                                                <div class="nk-reply-entry entry">
+                                                    {{ contact.message }}
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-reply-item -->
+                                        {% endfor %}
+                                        <div class="nk-reply-form">
+                                            <div class="nk-reply-form-header">
+                                                <ul class="nav nav-tabs-s2 nav-tabs nav-tabs-sm">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" data-toggle="tab" href="#reply-form">Reply</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="reply-form">
+                                                    <form action="{{ redirect('admin/post-reply-contact') }}" method="post">
+                                                        <input type="text" hidden name="contact-id" value="{{ contactForView.id }}">
+                                                        <input type="text" hidden name="email" value="{{ email }}">
+                                                        <div class="nk-reply-form-editor">
+                                                            <div class="nk-reply-form-field">
+                                                                <textarea name="message" class="form-control form-control-simple no-resize" placeholder="Hello"></textarea>
+                                                            </div>
+                                                            <div class="nk-reply-form-tools">
+                                                                <ul class="nk-reply-form-actions g-1">
+                                                                    <li class="mr-2"><button class="btn btn-primary" type="submit">Reply</button></li>
+                                                                </ul>
+                                                            </div><!-- .nk-reply-form-tools -->
+                                                        </div><!-- .nk-reply-form-editor -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-reply-form -->
+                                    </div><!-- .nk-reply -->
+                                </div><!-- .nk-msg-body -->
+                            </div><!-- .card-content -->
+                        </div><!-- .card-aside-wrap -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

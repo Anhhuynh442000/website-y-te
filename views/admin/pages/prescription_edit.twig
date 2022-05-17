@@ -1,0 +1,180 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Prescription / <strong
+                                        class="text-primary small">Edit</strong></h3>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <form id="edit-prescription-form" action="{{ redirect('admin/post-edit-prescription') }}" method="post">
+                        <input type="text" name="id" hidden value="{{ prescriptions.id }}">
+                        <input type="text" name="user-id" hidden value="{{ prescriptions.user_id }}">
+                        <input type="text" name="medical-file-id" hidden value="{{ medical_file_id }}">
+                        <div class="card-inner">
+                            <div class="preview-block">
+                                <span class="preview-title-lg overline-title">Main Information</span>
+                                <div class="row gy-4">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="full-name">Full name</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="full-name" id="full-name"
+                                                       placeholder="Enter full-name"
+                                                       value="{{ prescriptions.full_name }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="password">Gender</label>
+                                            <div class="form-control-wrap">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="male" name="gender"
+                                                           class="custom-control-input" value="Male" {{ prescriptions.gender == 'Male' ? 'checked' : '' }}>
+                                                    <label class="custom-control-label" for="male">Male</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="female" name="gender"
+                                                           class="custom-control-input" value="Female" {{ prescriptions.gender == 'Female' ? 'checked' : '' }}>
+                                                    <label class="custom-control-label" for="female">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="age">Age</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="age" id="age"
+                                                       placeholder="Enter Age" value="{{ prescriptions.age }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="address">Address</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="address" id="address"
+                                                       placeholder="Enter address" value="{{ prescriptions.address }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="note">Description</label>
+                                            <div class="form-control-wrap">
+                                            <textarea type="text" class="form-control" name="note" id="note"
+                                                      placeholder="Enter Last Name">11111111</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="medicine"></div>
+                                    {% for count in 1..10 %}
+                                        {% if prescriptions.medicine_list[count] is defined  %}
+                                            <div class="row gy-4">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="select-name-{{ count }}">Name {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <select class="form-control selectpicker" id="select-name-{{ count }}" data-live-search="true" name="name-{{ count }}">
+                                                                <option data-tokens="{{prescriptions.medicine_list[count].name}}">{{prescriptions.medicine_list[count].name}}</option>
+                                                                {% for medicine in medicines %}
+                                                                    <option data-tokens="{{ medicine.name }}">{{ medicine.name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label"
+                                                               for="quantity-{{ count }}">Quantity {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <input type="text" class="form-control" name="quantity-{{ count }}"
+                                                                   id="quantity-{{ count }}"
+                                                                   value="{{prescriptions.medicine_list[count].quantity}}"
+                                                                   placeholder="Enter Quantity {{ count }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label"
+                                                               for="dosage-{{ count }}">Dosage {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <input type="text" class="form-control" name="dosage-{{ count }}"
+                                                                   id="dosage-{{ count }}"
+                                                                   value="{{prescriptions.medicine_list[count].dosage}}"
+                                                                   placeholder="Enter Dosage {{ count }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="row gy-4">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="select-name-{{ count }}">Name {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <select class="form-control selectpicker" id="select-name-{{ count }}" data-live-search="true" name="name-{{ count }}">
+                                                                <option data-tokens="---">----</option>
+                                                                {% for medicine in medicines %}
+                                                                    <option data-tokens="{{ medicine.name }}">{{ medicine.name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label"
+                                                               for="quantity-{{ count }}">Quantity {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <input type="text" class="form-control" name="quantity-{{ count }}"
+                                                                   id="quantity-{{ count }}"
+                                                                   placeholder="Enter Quantity {{ count }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label"
+                                                               for="dosage-{{ count }}">Dosage {{ count }}</label>
+                                                        <div class="form-control-wrap">
+                                                            <input type="text" class="form-control" name="dosage-{{ count }}"
+                                                                   id="dosage-{{ count }}"
+                                                                   placeholder="Enter Dosage {{ count }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                <hr class="preview-hr">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+$(function() {
+    $('.selectpicker').selectpicker();
+});
+{% endblock %}

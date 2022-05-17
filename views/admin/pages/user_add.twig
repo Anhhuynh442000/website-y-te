@@ -1,0 +1,163 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Users / <strong
+                                        class="text-primary small">Add</strong></h3>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('errorAddUser')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorAddUser') }}</div>
+                    {% endif %}
+                    <form action="{{ redirect('admin/post-user-add') }}" method="post">
+                        <div class="card-inner">
+                            <div class="preview-block">
+                                <span class="preview-title-lg overline-title">Login Information</span>
+                                <div class="row gy-4">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="first-name">First Name</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="first-name"
+                                                       id="first-name" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="last-name">Last Name</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="last-name" id="last-name"
+                                                       placeholder="Enter Last Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="email">Email</label>
+                                            <div class="form-control-wrap">
+                                                <input type="email" class="form-control" name="email" id="email"
+                                                       placeholder="Enter Email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="password">Password</label>
+                                            <div class="form-control-wrap">
+                                                <input type="password" class="form-control" name="password"
+                                                       id="password" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="password">Status</label>
+                                            <div class="form-control-wrap">
+                                                <div class="custom-control custom-radio" >
+                                                    <input type="radio" id="inactive" name="status"
+                                                           class="custom-control-input" value="0" checked>
+                                                    <label class="custom-control-label" for="inactive">Inactive</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="active" value="1" name="status"
+                                                           class="custom-control-input">
+                                                    <label class="custom-control-label" for="active">Active</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                                            <div class="form-control-wrap">
+                                                <input type="password" class="form-control" name="confirm-password"
+                                                       id="confirm-password" placeholder="Enter Confirm Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="role">Role</label>
+                                            <div class="form-control-wrap ">
+                                                <div class="form-control-select">
+                                                    <select class="form-control" name="role" id="role">
+                                                        <option value="3">User</option>
+                                                        <option value="2">Doctor</option>
+                                                        <option value="1">Administrator</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="preview-hr">
+                                <span class="preview-title-lg overline-title">Personal information</span>
+                                <div class="row gy-4">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="birthday">Birthday</label>
+                                            <div class="form-control-wrap">
+                                                <input type="date" class="form-control" name="birthday" id="birthday"
+                                                       placeholder="Enter Birthday">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="address">Address</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="address" id="address"
+                                                       placeholder="Enter Address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="phone">Phone</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="phone" id="phone"
+                                                       placeholder="Enter Phone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="password">Gender</label>
+                                            <div class="form-control-wrap">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="nam" name="gender"
+                                                           class="custom-control-input" value="Male" checked>
+                                                    <label class="custom-control-label" for="nam">Male</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="nu" name="gender"
+                                                           class="custom-control-input" value="Female">
+                                                    <label class="custom-control-label" for="nu">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="preview-hr">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Add user</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

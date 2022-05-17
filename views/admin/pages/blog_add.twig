@@ -1,0 +1,74 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Add Blog</h3>
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('errorAddBlog')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorAddBlog') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <form action="{{ redirect('admin/post-blog-add') }}" enctype="multipart/form-data" method="post">
+                        <div class="card-inner">
+                            <div class="row gy-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="title">Title</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="title" id="title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="avatar">Avatar</label>
+                                        <div class="form-control-wrap">
+                                            <div class="custom-file">
+                                                <input type="file" name="avatar" class="custom-file-input" id="avatar">
+                                                <label class="custom-file-label" for="avatar">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="content">Content</label>
+                                        <div class="form-control-wrap">
+                                            <textarea type="text" class="form-control" name="content" id="content" placeholder="Enter Last Name">Content</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Add blog</button>
+                                    </div>
+                                </div>
+                                <!--col-->
+                            </div>
+                        </form><!--row-->
+                        </div><!-- .card-inner-group -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{% verbatim  %}
+<script>
+    tinymce.init({
+        selector: '#content',
+        skin: false
+    });
+</script>
+{% endverbatim  %}
+{% endblock %}

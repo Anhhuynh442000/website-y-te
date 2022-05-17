@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Infectious | Coronavirus (COVID 19) Medical HTML Template</title>
+
+		<style>
+			body {
+				background: #f5f5f5;
+				margin-top: 20px;
+			}
+
+			.ui-w-80 {
+				width: 80px !important;
+				height: auto;
+			}
+
+			.btn-default {
+				border-color: rgba(24, 28, 33, 0.1);
+				background: rgba(0, 0, 0, 0);
+				color: #4E5155;
+			}
+
+			label.btn {
+				margin-bottom: 0;
+			}
+
+			.btn-outline-primary {
+				border-color: #26B4FF;
+				background: transparent;
+				color: #26B4FF;
+			}
+
+			.btn {
+				cursor: pointer;
+			}
+
+			.text-light {
+				color: #babbbc !important;
+			}
+
+			.btn-facebook {
+				border-color: rgba(0, 0, 0, 0);
+				background: #3B5998;
+				color: #fff;
+			}
+
+			.btn-instagram {
+				border-color: rgba(0, 0, 0, 0);
+				background: #000;
+				color: #fff;
+			}
+
+			.card {
+				background-clip: padding-box;
+				box-shadow: 0 1px 4px rgba(24, 28, 33, 0.012);
+			}
+
+			.row-bordered {
+				overflow: hidden;
+			}
+
+			.account-settings-fileinput {
+				position: absolute;
+				visibility: hidden;
+				width: 1px;
+				height: 1px;
+				opacity: 0;
+			}
+			.account-settings-links .list-group-item.active {
+				font-weight: bold !important;
+			}
+			html:not(.dark-style) .account-settings-links .list-group-item.active {
+				background: transparent !important;
+			}
+			.account-settings-multiselect ~ .select2-container {
+				width: 100% !important;
+			}
+			.light-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+			.light-style .account-settings-links .list-group-item.active {
+				color: #4e5155 !important;
+			}
+			.material-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+			.material-style .account-settings-links .list-group-item.active {
+				color: #4e5155 !important;
+			}
+			.dark-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(255, 255, 255, 0.03) !important;
+			}
+			.dark-style .account-settings-links .list-group-item.active {
+				color: #fff !important;
+			}
+			.light-style .account-settings-links .list-group-item.active {
+				color: #4E5155 !important;
+			}
+			.light-style .account-settings-links .list-group-item {
+				padding: 0.85rem 1.5rem;
+				border-color: rgba(24, 28, 33, 0.03) !important;
+			}
+		</style>
+		{{ include('user/components/head.twig') }}
+	</head>
+	<body>
+		{{ include('user/components/menu.twig')}}
+		<div class="container py-5">
+			<div class="card">
+				<div class="card-header bg-primary">
+					<h1 class="text-uppercase text-center text-white">Khai báo y tế</h1>
+				</div>
+				<div class="card-body">
+					<form method="post" action="{{ redirect('user/post-medical-healths') }}">
+						{% if(Session.hasFlash('addHealthFailed')) %}
+							<div class="alert alert-danger">{{ session.getFlash('addHealthFailed') }}</div>
+						{% endif %}
+						{% if(Session.hasFlash('addHealthSuccess')) %}
+							<div class="alert alert-success">{{ session.getFlash('addHealthSuccess') }}</div>
+						{% endif %}
+						<h2 class="card-title">Thông tin chính</h2>
+						<input type="hidden" class="form-control" name="user_id" value="{{ data_user.id }}">
+						<div class="form-row mt-3">
+							<div class="col-md-6">
+								<label for="full-name">Họ tên</label>
+								<input type="text" id="full-name" placeholder="Full Name" class="form-control" name="full-name" value="{{ data_user.first_name }} {{ data_user.last_name }}">
+							</div>
+							<div class="col-md-6">
+								<label for="birthday">Ngày sinh</label>
+								<input type="date" id="birthday" class="form-control" name="birthday" value="{{data_user.birthday}}">
+							</div>
+						</div>
+						<div class="form-row mt-3 mt-3">
+							<div class="col-md-6">
+								<label for="identity_card">Identity Card</label>
+								<input id="identity_card" type="text" placeholder="Identity Card" class="form-control" name="identity_card">
+							</div>
+							<div class="col-md-6">
+								<label for="email">Email</label>
+								<input id="email" type="email" placeholder="Email" class="form-control" name="email" value="{{ data_user.email }}">
+							</div>
+						</div>
+						<div class="form-row mt-3 mt-3">
+							<div class="col-md-6">
+								<label for="phone">Điện thoại</label>
+								<input id="phone" type="text" placeholder="Phone" class="form-control" name="phone" value={{ data_user.phone }}>
+							</div>
+							<div class="col-md-6">
+								<label for="way">Đường</label>
+								<input id="way" type="text" placeholder="Way" class="form-control" name="way" value={{ data_user.address }}>
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-6">
+								<label for="district">Quận</label>
+								<input id="district" type="text" placeholder="District" class="form-control" name="district">
+							</div>
+							<div class="col-md-6">
+								<label for="wards">Phường</label>
+								<input id="wards" type="text" placeholder="Wards" class="form-control" name="wards">
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-6">
+								<label for="province">Tỉnh</label>
+								<input id="province" type="text" placeholder="Province" class="form-control" name="province">
+							</div>
+							<div class="col-md-6">
+								<label for="gender">Giới tính</label>
+								{{ data_user.gender }}
+								{% if data_user.gender == 'male' %}
+									<div class="form-check">
+										<input id="gender" class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male" checked>
+										<label class="form-check-label" for="gridRadios1">
+											Nam
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+										<label class="form-check-label" for="gridRadios2">
+											Nữ
+										</label>
+									</div>
+								{% endif %}
+								{% if data_user.gender == 'female' %}
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
+										<label class="form-check-label" for="gridRadios1">
+											Nam
+										</label>
+									</div>
+									<div class="form-check">
+										<input id="gender" class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female" checked>
+										<label class="form-check-label" for="gridRadios2">
+											Nữ
+										</label>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-12">
+								<hr>
+							</div>
+						</div>
+						<h2 class="card-title mt-3">Thông tin khai báo</h2>
+						<div class="form-row mt-3">
+							<div class="col-md-12 mt-2">
+								<label for="sign" style="font-weight:bold">Trong vòng 14 người của bạn, bạn có dấu hiệu sốt, ho, khó thở, đau họng ?</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input id="sign" class="form-check-input" type="radio" name="sign" id="sign_1" value="yes_sign">
+									<label class="form-check-label" for="sign_1">Có</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input id="sign" class="form-check-input" type="radio" name="sign" id="sign_2" value="no_sign">
+									<label class="form-check-label" for="sign_2">Không</label>
+								</div>
+							</div>
+
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-12 mt-2">
+								<label for="country" style="font-weight:bold">Bạn đã đi qua bất kỳ quốc gia/lãnh thổ nào với 14 ngày?</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input id="country" class="form-check-input" type="radio" name="country" id="country_1" value="yes_country">
+									<label class="form-check-label" for="country_1">Có</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="country" id="country_2" value="no_country">
+									<label class="form-check-label" for="country_2">Không</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-12 mt-2">
+								<label style="font-weight:bold">Trong 14 vừa qua, bạn đã liên lạc với một người bị bệnh hoặc bị nghi ngờ có covid ?</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="sick" id="sick_1" value="yes_sick">
+									<label class="form-check-label" for="sick_1">Có</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="sick" id="sick_2" value="no_sick">
+									<label class="form-check-label" for="sick_2">Không</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-12 mt-2">
+								<label style="font-weight:bold">Trong 14 vừa qua, bạn đã liên lạc với ai đó từ một quốc gia với Covid-19 ?</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="contact" id="contact_1" value="yes_contact">
+									<label class="form-check-label" for="contact_1">Có</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="contact" id="contact_2" value="no_contact">
+									<label class="form-check-label" for="contact_2">Không</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="col-md-12 mt-2">
+								<label style="font-weight:bold">Với 14 ngày, bạn đã liên lạc với người có triệu chứng (sốt, ho, khó thở, đau họng) ?</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="symptoms" id="symptoms_1" value="yes_symptoms">
+									<label class="form-check-label" for="symptoms_1">Có</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="symptoms" id="symptoms_2" value="no_symptoms">
+									<label class="form-check-label" for="symptoms_2">Không</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row mt-3">
+						<div class="col-md-12">
+							<hr>
+						</div>
+					</div>
+					<div class="form-row mt-3">
+						<div class="col-md-12">
+							<input class="btn btn-primary form-control" type="submit" value="Submit">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html></div>{{ include('user/components/footer.twig')}}</body></html>

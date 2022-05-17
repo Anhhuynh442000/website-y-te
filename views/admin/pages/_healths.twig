@@ -1,0 +1,454 @@
+<div class="nk-block">
+    <div class="nk-block-head nk-block-head-sm nk-block-between">
+        <h5 class="title">Covid Vaccination</h5>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddHealth">Add healths
+        </button>
+    </div><!-- .nk-block-head -->
+    <div class="profile-ud-list">
+        {% for injection in medicalFile.covid_injections %}
+            <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                    <span class="profile-ud-label">Injection {{ injection.injection }}</span>
+                    <div class="profile-ud-value">Medicine: {{ injection.type_medicine }}</div>
+                    <div class="profile-ud-value">Date: {{ injection.date }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div><!-- .profile-ud-list -->
+</div><!-- .nk-block -->
+<div class="nk-divider divider md"></div>
+<div class="nk-block">
+    <div class="nk-block-head nk-block-head-sm nk-block-between">
+        <h5 class="title">Medical Examination History</h5>
+    </div><!-- .nk-block-head -->
+    <div class="profile-ud-list">
+
+    </div><!-- .profile-ud-list -->
+</div><!-- .nk-block -->
+<div class="nk-block">
+    <div class="nk-tb-list nk-tb-ulist is-compact">
+        <div class="nk-tb-item nk-tb-head">
+            <div class="nk-tb-col nk-tb-col-check">
+                <div class="custom-control custom-control-sm custom-checkbox notext">
+                    <input type="checkbox" class="custom-control-input" id="uid">
+                    <label class="custom-control-label" for="uid"></label>
+                </div>
+            </div>
+            <div class="nk-tb-col"><span class="sub-text">Id</span></div>
+            <div class="nk-tb-col"><span class="sub-text">Summary</span></div>
+            <div class="nk-tb-col tb-col-md"><span class="sub-text">Date of the examination</span></div>
+            <div class="nk-tb-col nk-tb-col-tools text-right">Action</div>
+        </div><!-- .nk-tb-item -->
+        {% for health in healths %}
+            <div class="nk-tb-item">
+                <div class="nk-tb-col nk-tb-col-check">
+                    <div class="custom-control custom-control-sm custom-checkbox notext">
+                        <input type="checkbox" class="custom-control-input" id="uid1">
+                        <label class="custom-control-label" for="uid1"></label>
+                    </div>
+                </div>
+                <div class="nk-tb-col tb-col-md">
+                    <span>{{ health.id }}</span>
+                </div>
+                <div class="nk-tb-col">
+                    <span>{{ health.summary }}</span>
+                </div>
+                <div class="nk-tb-col tb-col-md">
+                    <span>{{ health.date }}</span>
+                </div>
+                <div class="nk-tb-col nk-tb-col-tools">
+                    <ul class="nk-tb-actions gx-2">
+                        <li>
+                            <div class="drodown">
+                                <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle"
+                                   data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="link-list-opt no-bdr">
+                                        <li><a href="javascript:void(0)" class="js-health-view-detail"
+                                               data-health-id="{{ health.id }}"><em class="icon ni ni-eye"></em><span>View Details</span></a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="javascript:void(0)" class="js-view-prescription"
+                                               data-health-id="{{ health.id }}">
+                                                <em class="icon fas fa-prescription"></em><span>Views prescription</span></a>
+                                        </li>
+                                        <li><a href="javascript:void(0)" class="js-add-prescription"
+                                               data-health-id="{{ health.id }}"><em
+                                                        class="icon fas fa-prescription"></em><span>Add prescription</span></a>
+                                        </li>
+                                        <li><a href="javascript:void(0)" class="js-edit-prescription"
+                                               data-health-id="{{ health.id }}"><em
+                                                        class="icon fas fa-prescription"></em><span>Edit prescription</span></a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="javascript:void(0)" class="js-delete-health"
+                                               data-health-id="{{ health.id }}" data-medical-file-id="{{ medicalFile.id }}"><em
+                                                        class="icon fas fa-trash-alt"></em><span>Delete healths</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- .nk-tb-item -->
+        {% endfor %}
+    </div><!-- .nk-tb-list -->
+</div><!-- .nk-block -->
+
+<div class="modal fade" tabindex="-1" id="modalDetailHealths">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h5 class="modal-title">Healths Information</h5>
+            </div>
+            <div class="modal-body">
+                <form action="{{ redirect('admin/post-medical-health-edit') }}" method="post">
+                    <input type="text" name="health-id" hidden value="">
+                    <input type="text" name="medical-file-id" hidden value="">
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            <span class="preview-title-lg overline-title">Main Information</span>
+                            <div class="nk-block">
+                                <span class="preview-title-lg overline-title">Summary</span>
+                                <div class="bq-note">
+                                    <div class="bq-note-item">
+                                        <div class="bq-note-text">
+                                            <p class="js-summary"></p>
+                                        </div>
+                                    </div><!-- .bq-note-item -->
+                                </div><!-- .bq-note -->
+                            </div><!-- .nk-block -->
+                            <span class="preview-title-lg overline-title">Doctor's advice</span>
+                            <div class="bq-note">
+                                <div class="bq-note-item">
+                                    <div class="bq-note-text">
+                                        <p class="js-advice"></p>
+                                    </div>
+                                </div><!-- .bq-note-item -->
+                            </div><!-- .bq-note -->
+                            <hr class="preview-hr">
+                            <span class="preview-title-lg overline-title">Edit information</span>
+                            <div class="row gy-4">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="summary">Summary</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="summary" id="summary"
+                                                   placeholder="Enter Summary">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="description">Description</label>
+                                        <div class="form-control-wrap">
+                                            <textarea type="text" class="form-control" name="description2"
+                                                      id="description"
+                                                      placeholder="Enter description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="preview-hr">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text">Modal Footer Text</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalPrescription">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h5 class="modal-title">Prescription Information</h5>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            <span class="preview-title-lg overline-title">Main Information</span>
+                            <div class="nk-block">
+                                <div class="profile-ud-list">
+                                    <div class="profile-ud-item">
+                                        <div class="profile-ud wider">
+                                            <span class="profile-ud-label">Full name</span>
+                                            <div class="profile-ud-value js-full-name"></div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-ud-item">
+                                        <div class="profile-ud wider">
+                                            <span class="profile-ud-label">Gender - Age</span>
+                                            <div class="profile-ud-value"><span class="js-gender"></span> - <span
+                                                        class="js-age">11</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-ud-item">
+                                        <div class="profile-ud wider">
+                                            <span class="profile-ud-label">Address</span>
+                                            <div class="profile-ud-value js-address">123 Gò Vấp, TPHCM</div>
+                                        </div>
+                                    </div>
+                                </div><!-- .profile-ud-list -->
+                            </div><!-- .nk-block -->
+                            <hr class="preview-hr">
+                            <span class="preview-title-lg overline-title">Prescription information</span>
+                            <div class="row gy-4">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Dosage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="js-medicine-list"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="preview-hr">
+                            {# <div class="col-sm-6"> #}
+                            {# <div class="form-group"> #}
+                            {# <button type="submit" class="btn btn-success">Edit</button> #}
+                            {# </div> #}
+                            {# </div> #}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text">Modal Footer Text</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalAddHealth">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h5 class="modal-title">Add Healths</h5>
+            </div>
+            <div class="modal-body">
+                <form action="{{ redirect('admin/post-medical-health-add') }}" method="post">
+                    <input type="text" name="medical-file-id" hidden value="{{ medicalFile.id }}">
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            <span class="preview-title-lg overline-title">Main Information</span>
+                            <div class="row gy-4">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="summary">Summary</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="summary" id="summary"
+                                                   placeholder="Enter Summary">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="note">Description</label>
+                                        <div class="form-control-wrap">
+                                            <textarea type="text" class="form-control" name="note" id="note"
+                                                      placeholder="Enter description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="preview-hr">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">Add healths</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text">Modal Footer Text</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalAddPrescription">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h5 class="modal-title">Add Prescription</h5>
+            </div>
+            <div class="modal-body">
+                <form id="add-prescription-form" action="{{ redirect('admin/post-prescription-add') }}" method="post">
+                    <input type="text" name="medical-file-id" hidden value="{{ medicalFile.id }}">
+                    <input type="text" name="user-id" hidden value="{{ medicalFile.user_id }}">
+                    <input type="text" name="health-id" hidden>
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            <span class="preview-title-lg overline-title">Main Information</span>
+                            <div class="row gy-4">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name">Full name</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="full-name" id="full-name"
+                                                   placeholder="Enter full-name"
+                                                   value="{{ medicalFile.first_name }} {{ medicalFile.last_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="password">Gender</label>
+                                        <div class="form-control-wrap">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="male" name="gender"
+                                                       class="custom-control-input" value="Male" {{ medicalFile.gender == 'Male' ? 'checked' : '' }}>
+                                                <label class="custom-control-label" for="male">Male</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="female" name="gender"
+                                                       class="custom-control-input" value="Female" {{ medicalFile.gender == 'Female' ? 'checked' : '' }}>
+                                                <label class="custom-control-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="age">Age</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="age" id="age"
+                                                   placeholder="Enter Age" value="{{ medicalFile.age }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="address">Address</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="address" id="address"
+                                                   placeholder="Enter address" value="{{ medicalFile.full_address }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="note">Description</label>
+                                        <div class="form-control-wrap">
+                                            <textarea type="text" class="form-control" name="note" id="note"
+                                                      placeholder="Enter Last Name">11111111</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% for count in 1..10 %}
+                                <div class="row gy-4">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="select-name-{{ count }}">Name {{ count }}</label>
+                                            <div class="form-control-wrap">
+                                                <select class="form-control selectpicker" id="select-name-{{ count }}" data-live-search="true" name="name-{{ count }}">
+                                                    <option data-tokens="---">----</option>
+                                                    {% for medicine in medicines %}
+                                                        <option data-tokens="{{ medicine.name }}">{{ medicine.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                   for="quantity-{{ count }}">Quantity {{ count }}</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="quantity-{{ count }}"
+                                                       id="quantity-{{ count }}"
+                                                       placeholder="Enter Quantity {{ count }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                   for="dosage-{{ count }}">Dosage {{ count }}</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="dosage-{{ count }}"
+                                                       id="dosage-{{ count }}"
+                                                       placeholder="Enter Dosage {{ count }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <hr class="preview-hr">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">Add healths</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text">Modal Footer Text</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal zoom" tabindex="-1" id="modalDeleteHealth">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h5 class="modal-title">Delete health</h5>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure delete health?</h4>
+                Health have id <span class="js-health-id" style="font-weight: bold; font-size: 15px"></span>
+                after being deleted will not be able to recover.
+                <form id="delete-health-form" action="{{ redirect('admin/post-delete-health') }}" method="post">
+                    <input type="text" hidden value="" name="health-id">
+                    <input type="text" hidden value="" name="medical-file-id">
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            <button type="submit" class="btn btn-xl btn-outline-danger" style="margin-right: 10px">
+                                Delete
+                            </button>
+                            <button class="btn btn-xl btn-outline-secondary js-btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text">Modal Footer Text</span>
+            </div>
+        </div>
+    </div>
+</div>

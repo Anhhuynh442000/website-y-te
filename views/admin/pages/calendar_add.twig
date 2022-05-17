@@ -1,0 +1,105 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Calendar / <strong
+                                        class="text-primary small">Add</strong></h3>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('errorAddCalendar')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorAddCalendar') }}</div>
+                    {% endif %}
+                    <form action="{{ redirect('admin/post-calendar-add') }}" method="post">
+                        <div class="card-inner">
+                            <div class="preview-block">
+                                <div class="row gy-4 container-sm">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="subject">Subject</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="subject"
+                                                       id="subject" placeholder="Enter subject">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="full-name">Full name</label>
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" name="full-name" id="full-name"
+                                                       placeholder="Enter full name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="date">Date</label>
+                                            <div class="form-control-wrap">
+                                                <input type="date" class="form-control" name="date" id="date"
+                                                       placeholder="Enter first name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="time-start">Time start</label>
+                                            <div class="form-control-wrap">
+                                                <input type="time" class="form-control" name="time-start" id="time-start"
+                                                       placeholder="Enter time start">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="time-end">Time end</label>
+                                            <div class="form-control-wrap">
+                                                <input type="time" class="form-control" name="time-end" id="time-end"
+                                                       placeholder="Enter time start">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="select-doctor">Doctor</label>
+                                            <div class="form-control-wrap">
+                                                <div id="select-doctor"></div>
+                                                <input type="text" id="doctor-id" name="doctor-id" hidden value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="description">Description</label>
+                                            <div class="form-control-wrap">
+                                                <textarea class="form-control" name="description"
+                                                       id="description" placeholder="Enter description">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="preview-hr">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ createLink('js/dist/calendar_add.js')}}"></script>
+{% endblock %}

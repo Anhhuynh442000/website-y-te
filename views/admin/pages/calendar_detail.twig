@@ -1,0 +1,337 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Calendar / <strong
+                                        class="text-primary small">{{ calendar_for_view.calendar_info.subject }}</strong>
+                            </h3>
+                            <div class="nk-block-des text-soft">
+                                <ul class="list-inline">
+                                    <li>Calendar detail: <span class="text-base"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('successUpdateStatus')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successUpdateStatus') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorUpdateStatus')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorUpdateStatus') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('successEditCalendar')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successEditCalendar') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorEditCalendar')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorEditCalendar') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <div class="card-aside-wrap">
+                            <div class="card-content">
+                                <ul class="nav nav-tabs nav-tabs-mb-icon nav-tabs-card">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">
+                                            <em class="icon ni ni-user-circle"></em><span>Info</span></a>
+                                    </li>
+                                </ul><!-- .nav-tabs -->
+                                <div class="card-inner">
+                                    <div class="nk-block">
+                                        <div style="margin-bottom: 5px">
+                                            <button type="button" class="btn btn-dim btn-primary" data-toggle="modal"
+                                                    data-target="#changeStatusModal">Change status
+                                            </button>
+                                        </div>
+                                        <div style="clear: both"></div>
+                                        <div class="nk-block-head nk-block-head-sm nk-block-between">
+                                            <h5 class="title">Calendar Information</h5>
+                                            <div>
+                                                <button type="button"
+                                                        data-selected-doctor-id="{{ calendar_for_view.attendees_info.doctor.id }}"
+                                                        class="btn btn-primary js-btn-edit-calendar">Edit
+                                                    calendar
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-danger" data-toggle="modal" data-target="#deleteCalendarModal">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="profile-ud-list">
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Subject</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.calendar_info.subject }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Full name</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.calendar_info.full_name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Date start</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.calendar_info.date_start }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Date end</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.calendar_info.date_end }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Status</span>
+                                                    <span class="profile-ud-value">
+                                                        {% if calendar_for_view.calendar_info.status == 'Pending' %}
+                                                            <span class="badge badge-gray badge-sm">{{ calendar_for_view.calendar_info.status }}</span>
+                                                        {% elseif calendar_for_view.calendar_info.status == 'Approve' %}
+                                                            <span class="badge badge-primary badge-sm">{{ calendar_for_view.calendar_info.status }}</span>
+                                                        {% elseif calendar_for_view.calendar_info.status == 'Reject' %}
+                                                            <span class="badge badge-danger badge-sm">{{ calendar_for_view.calendar_info.status }}</span>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div><!-- .profile-ud-list -->
+                                    </div><!-- .nk-block -->
+                                    <div class="nk-divider divider md"></div>
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-line">
+                                            <h6 class="title overline-title text-base">Attendees</h6>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="profile-ud-list">
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Patient</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.attendees_info.patient.full_name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Doctor</span>
+                                                    <span class="profile-ud-value">{{ calendar_for_view.attendees_info.doctor.full_name }}</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- .profile-ud-list -->
+                                    </div><!-- .nk-block -->
+                                    <div class="nk-divider divider md"></div>
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-line">
+                                            <h6 class="title overline-title text-base">Description</h6>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="bq-note">
+                                            <div class="bq-note-item">
+                                                <div class="bq-note-text">
+                                                    <p>{{ calendar_for_view.calendar_info.description }}</p>
+                                                </div>
+                                            </div><!-- .bq-note-item -->
+                                        </div>
+                                    </div>
+                                    <div class="nk-divider divider md"></div>
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-line">
+                                            <h6 class="title overline-title text-base">Note Status</h6>
+                                        </div><!-- .nk-block-head -->
+                                        {% if calendar_for_view.calendar_info.note != null %}
+                                            <div class="bq-note">
+                                                <div class="bq-note-item">
+                                                    <div class="bq-note-text">
+                                                        <p>{{ calendar_for_view.calendar_info.note }}</p>
+                                                    </div>
+                                                </div><!-- .bq-note-item -->
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="nk-divider divider md"></div>
+                                    <!-- Modal Content Code -->
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-content -->
+                        </div><!-- .card-aside-wrap -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+        <div class="modal zoom" id="changeStatusModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change status</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ redirect('admin/post-calendar-edit-status') }}" method="post">
+                            <input type="text" hidden name="id" value="{{ calendar_for_view.calendar_info.id }}">
+                            <div class="row gy-4">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio" style="margin-right: 5px">
+                                            <input type="radio" id="customRadio1" name="status" value="1"
+                                                   class="custom-control-input" {{ calendar_for_view.calendar_info.status == 'Approve' ? 'checked' : '' }}>
+                                            <label class="custom-control-label text-primary"
+                                                   for="customRadio1">Approve</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadio2" name="status" value="2"
+                                                   class="custom-control-input" {{ calendar_for_view.calendar_info.status == 'Reject' ? 'checked' : '' }}>
+                                            <label class="custom-control-label text-danger"
+                                                   for="customRadio2">Reject</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="note">Note</label>
+                                        <div class="form-control-wrap">
+                                            <textarea class="form-control no-resize" id="note" name="note"
+                                                      placeholder="Note">{{ calendar_for_view.calendar_info.note }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary js-btn-cancel">Change</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal zoom" id="editCalendarModal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change status</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ redirect('admin/post-calendar-edit') }}" method="post" id="edit-calendar">
+                            <input type="text" name="id" value="{{ calendar_for_view.calendar_info.id }}" hidden>
+                            <input type="text" name="doctor-id-selected" value="{{ calendar_for_view.attendees_info.doctor.id }}" hidden>
+                            <input type="text" id="current-doctor-id" name="current-doctor-id" value="{{ calendar_for_view.attendees_info.doctor.id }}" hidden>
+                            <div class="row gy-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Subject</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="subject"
+                                               value="{{ calendar_for_view.calendar_info.subject }}" name="subject">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="full-name" class="form-label">Full name</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="full-name"
+                                               value="{{ calendar_for_view.calendar_info.full_name }}" name="full-name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date" class="form-label">Date</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <input type="date" class="form-control" id="date" name="date"
+                                               value="{{ calendar_for_view.calendar_info.date }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="time-start" class="form-label">Time start</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <input type="time" class="form-control" id="time-start" name="time-start"
+                                               value="{{ calendar_for_view.calendar_info.time_start }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="time-end" class="form-label">Time end</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <input type="time" class="form-control" id="time-end" name="time-end"
+                                               value="{{ calendar_for_view.calendar_info.time_end }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="doctor" class="form-label">Doctor</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <div id="select-doctor"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="description" class="form-label">Description</label>
+                                    </div>
+                                    <div class="form-control-wrap">
+                                    <textarea
+                                            class="form-control"
+                                            name="description"
+                                            id="description"
+                                    ></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    </div>
+                                    <div class="form-control-wrap">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal zoom" tabindex="-1" id="deleteCalendarModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete calendar</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Are you sure delete calendar?</h4>
+                        Calendar <span style="font-weight: bold; font-size: 15px">{{ calendar_for_view.calendar_info.subject }}</span> after being deleted will not be able to recover.
+                        <form id="delete-user-form" action="{{ redirect('admin/post-calendar-delete') }}" method="post">
+                            <input type="text" hidden value="{{ calendar_for_view.calendar_info.id }}" name="id">
+                            <div class="card-inner">
+                                <div class="preview-block">
+                                    <button type="submit" class="btn btn-xl btn-outline-danger" style="margin-right: 10px">Delete</button>
+                                    <button class="btn btn-xl btn-outline-secondary">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer bg-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ createLink('js/dist/calendar_detail.js')}}" type="module"></script>
+{% endblock %}

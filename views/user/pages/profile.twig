@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<title>Profile</title>
+		<style>
+			body {
+				background: #1da1f2;
+			}
+			.border-right {
+				border-right: none;
+			}
+			.form-control:focus {
+				box-shadow: none;
+				border-color: #BA68C8
+			}
+
+			.profile-button {
+				background: #BA68C8;
+				box-shadow: none;
+				border: none
+			}
+
+			.profile-button:hover {
+				background: #682773
+			}
+
+			.profile-button:focus {
+				background: #682773;
+				box-shadow: none
+			}
+
+			.profile-button:active {
+				background: #682773;
+				box-shadow: none
+			}
+
+			.back:hover {
+				color: #682773;
+				cursor: pointer
+			}
+
+			.labels {
+				font-size: 11px
+			}
+			.roundeed {
+				border-radius: 2rem !important;
+			}
+			.add-experience:hover {
+				background: #BA68C8;
+				color: #fff;
+				cursor: pointer;
+				border: solid 1px #BA68C8
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container roundeed bg-white mt-5 mb-5">
+			<form method="post" method="post" action="{{ redirect('user/post-profile') }}" enctype="multipart/form-data">
+				<div class="row">
+
+					<div class="col-md-3">
+						<div class="d-flex flex-column align-items-center text-center p-3 py-5">
+							<a href="{{ createLink('') }}">
+								<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 576 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.6 483.2 483.9 512 448.5 512H128.1C92.75 512 64.09 483.3 64.09 448V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5H575.8zM288 160C252.7 160 224 188.7 224 224C224 259.3 252.7 288 288 288C323.3 288 352 259.3 352 224C352 188.7 323.3 160 288 160zM256 320C211.8 320 176 355.8 176 400C176 408.8 183.2 416 192 416H384C392.8 416 400 408.8 400 400C400 355.8 364.2 320 320 320H256z"/></svg>
+								<span>Home</span>
+							</a>
+
+						
+							{# {% if(session.get('userProfile').avatar != '') %}
+								<img class="rounded-circle mt-5" width="100%" src="/{{helper.getDirectoryUpload()}}avatars/{{session.get('userProfile').avatar}}" width="90">
+							{% endif %}
+							{% if(session.get('user').face_id != '') %}
+								<img class="rounded-circle mt-5" width="100%" src="{{session.get('userProfile').avatar}}" width="90">
+							{% else %}
+								<img class="rounded-circle mt-5" width="100%" src="/{{helper.getDirectoryUpload()}}avatars/donaltrump.jpg" width="90">
+							{% endif %} #}
+
+							{% if(session.get('userProfile').avatar == '') %}
+								<img class="rounded-circle mt-5" width="100%" src="https://quangmap.dev/phpmvc-user-test/public/{{helper.getDirectoryUpload()}}avatars/donaltrump.jpg" width="90">
+							{% else %}
+								{%  if(session.get('userProfile').face_id != '') %}
+									{% if 'https' in (session.get('userProfile').avatar) %}
+										<img class="rounded-circle mt-5" width="100%" src="{{session.get('userProfile').avatar}}" width="90">
+									{% else %}
+										<img class="rounded-circle mt-5" width="100%" src="https://quangmap.dev/phpmvc-user-test/public/{{helper.getDirectoryUpload()}}avatars/{{session.get('userProfile').avatar}}" width="90">
+									{% endif %}
+								{%  else %}
+									<img class="rounded-circle mt-5" width="100%" src="https://quangmap.dev/phpmvc-user-test/public/{{helper.getDirectoryUpload()}}avatars/{{session.get('userProfile').avatar}}" width="90">
+								{% endif %}
+							{% endif %}
+
+
+
+{# 
+							<a href="/{{helper.getDirectoryUpload()}}qr_images/{{session.get('userProfile').qr_image}}" download>
+								<img class="rounded-circle mt-5" width="100%" src="/{{helper.getDirectoryUpload()}}qr_images/{{session.get('userProfile').qr_image}}" width="90">
+								Download Qr Code
+							</a> #}
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="p-3 py-5">
+							<div class="d-flex justify-content-between align-items-center mb-3">
+								<h2 class="text-right">Thông tin cá nhân</h2>
+							</div>
+							{% if(Session.hasFlash('updateUserError')) %}
+								<div class="alert alert-danger">{{ session.getFlash('updateUserError') }}</div>
+							{% endif %}
+							{% if(Session.hasFlash('errorImage')) %}
+								<div class="alert alert-danger">{{ session.getFlash('errorImage') }}</div>
+							{% endif %}
+							{% if(Session.hasFlash('updateUser')) %}
+								<div class="alert alert-success">{{ session.getFlash('updateUser') }}</div>
+							{% endif %}
+
+							<input type="hidden" name="user_id" class="form-control" value=" {{ session.get('userProfile').user_id}}">
+							<input type="hidden" name="id_profile" class="form-control" value=" {{ session.get('userProfile').id}}">
+							<div class="row mt-2">
+								<div class="col-md-12">
+									<label class="labels">Họ
+									</label><input type="text" name="first-name" class="form-control" placeholder="first name" value=" {{ session.get('userProfile').first_name}}"></div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-md-12">
+									<label class="labels">Tên
+									</label><input type="text" name="last-name" class="form-control" placeholder="first name" value=" {{ session.get('userProfile').last_name}}"></div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<label class="labels">Ngày sinh</label>
+									<input type="date" class="form-control" placeholder="headline" name="birthday" value="{{ session.get('userProfile').birthday }}">
+								</div>
+								<div class="col-md-12">
+									<label class="labels">Số điện thoại</label><input type="text" class="form-control" name="phone" placeholder="headline" value="{{ session.get('userProfile').phone }}"></div>
+								<div class="col-md-12">
+									<label class="labels">Số hộ chiếu/CMND</label><input type="text" class="form-control" placeholder="CMND" name="cmnd" value=""></div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<label class="labels">Email</label><input type="mail" name="email" class="form-control" placeholder="country" value="{{ session.get('userProfile').email }}"></div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<label class="labels">Ảnh đại diện</label><input type="file" name="avatar" class="form-control" placeholder="avatar" value="{{ session.get('userProfile').avatar }}" required></div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<label class="labels">Giới tính</label>
+									<div class="col-sm-10">
+										{% if session.get('userProfile').gender == 'male' %}
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male" checked>
+												<label class="form-check-label" for="gridRadios1">
+													Nam
+												</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+												<label class="form-check-label" for="gridRadios2">
+													Nữ
+												</label>
+											</div>
+										{% endif %}
+										{% if session.get('userProfile').gender == 'female' %}
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
+												<label class="form-check-label" for="gridRadios1">
+													Nam
+												</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female" checked>
+												<label class="form-check-label" for="gridRadios2">
+													Nữ
+												</label>
+											</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<label class="labels">Địa chỉ</label><input type="text" class="form-control" placeholder="country" name="address" value="{{ session.get('userProfile').address }}"></div>
+
+
+							</div>
+							{# <div class="row mt-3 ">
+								<div class="col-md-12">
+									<label class="labels">Country</label><input type="text" class="form-control" placeholder="country" name="country" value="Country">
+
+								</div>
+							</div>
+							<div class="row mt-3 ">
+								<div class="col-md-12">
+									<label class="labels">State/Region</label><input type="text" class="form-control" value="Boston" name="state" placeholder="state"></div>
+							</div> #}
+							<div class="row mt-3">
+								<div class="col-md-12">
+									<input class="btn btn-danger btn-lg btn-block" type="submit" value="Lưu">
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</body>
+</html></body></html></body></html>

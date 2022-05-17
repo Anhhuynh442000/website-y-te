@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>medical</title>
+		{{ include('/user/components/head.twig') }}
+	</head>
+
+	<body>
+		<!--::header part start::-->
+		{{ include('user/components/menu.twig')}}
+		<!-- Header part end-->
+
+		<!-- breadcrumb start-->
+			<section class="breadcrumb_part breadcrumb_bg"> <div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumb_iner">
+							<div class="breadcrumb_iner_item">
+								<h2>Bài viết</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb start-->
+			<section class="pt-5 pb-5">
+				<div class="container">
+					<div class="row mb-md-2">
+						{% for blog in data %}
+						<div class="col-md-6 col-lg-4">
+							<a href="#">
+								<div class="card shadow-sm border-light mb-4">
+									<a href="{{ createLink('user/detail-blog') }}?id={{blog.id}}" class="position-relative">
+										<img src="https://via.placeholder.com/500x350/5fa9f8/ffffff" class="card-img-top" alt="image">
+									</a>
+									<div class="card-body">
+										<a href="#">
+											<h3 class="font-weight-normal">{{ blog.title }}</h3>
+										</a>
+										<div class="d-flex my-4">
+											<span class="small lh-120" style="font-size: 100%">
+												<i class="fas fa-map-marker-alt mr-2"></i>Ngày tạo: {{ blog.created_at }}</span>
+										</div>
+										<div class="d-flex my-4">
+											<span class="small lh-120" style="font-size: 100%">
+												<i class="fas fa-map-marker-alt mr-2"></i>Tác giả: {{ blog.first_name }} {{ blog.last_name }}</span>
+										</div>
+										<div class="d-flex my-4">
+											<a href="{{ createLink('user/detail-blog') }}?id={{blog.id}}" class="btn btn-info">Xem chi tiết</a>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+
+					<div class="row py-4 mt-md-5">
+						<div class="col text-center">
+							<a href="#" class="btn btn-lg shadow btn-primary mt-1">Browse all</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+		<!-- footer part start-->
+		{{include('user/components/footer.twig')}}
+		<!-- footer part end-->
+
+	</body>
+
+</html>

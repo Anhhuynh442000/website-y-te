@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>medical</title>
+		{{ include('user/components/head.twig') }}
+
+	</head>
+
+	<body>
+		<!--::header part start::-->
+
+		<!-- Header part end-->
+		{{ include('user/components/menu.twig')}}
+		<!-- breadcrumb start-->
+
+		<!-- breadcrumb start-->
+
+			<div class="container"> <div class="row md-5">
+				<div class="col-12 md-5">
+					<div class="card-title" style="text-align:center">
+						<h2>ĐẶT LỊCH HẸN</h2>
+					</div>
+				{% if(Session.hasFlash('makeAppointment')) %}
+					<div class="alert alert-success">{{ session.getFlash('makeAppointment') }}</div>
+				{% endif %}
+					<form action="{{ redirect('doctor/post-book-clinic') }}" method="post">
+						<input type="hidden" name="id_doctor" value={{ id_doctor }}>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Họ</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="name" name="first-name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Tên</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="name" name="last-name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Địa chỉ</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="name" name="address">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Số điện thoại</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="name" name="phone">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Chọn ngày
+							</label>
+							<div class="col-sm-9">
+								<input type="date" min="08:00" max="17:00" class="form-control" id="name" name="date">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-sm-3 col-form-label">Chọn giờ
+							</label>
+							<div class="col-sm-9">
+								<input type="time" min="08:00" max="17:00" class="form-control" id="name" name="time">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="description" class="col-sm-3 col-form-label">Bệnh nhân có ghi chú khác</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" id="description" rows="5" name="description"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="description" class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-9">
+								<input type="submit" class="form-control btn-info" id="name" name="submit" value="Save">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!--::regervation_part end::-->
+
+		<!-- footer part start-->
+		{{ include('user/components/footer.twig')}}</body>
+</html></body></html>

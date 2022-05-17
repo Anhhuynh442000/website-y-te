@@ -1,0 +1,330 @@
+{% extends 'admin/components/base.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Users / <strong class="text-primary small">{{ user.full_name }}</strong></h3>
+                            <div class="nk-block-des text-soft">
+                                <ul class="list-inline">
+                                    <li>User ID: <span class="text-base">{{ user.id }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% include('admin/components/back_button.twig') %}
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    {% if(Session.hasFlash('successUpdateUser')) %}
+                        <div class="alert alert-success">{{ session.getFlash('successUpdateUser') }}</div>
+                    {% endif %}
+                    {% if(Session.hasFlash('errorUpdateUser')) %}
+                        <div class="alert alert-danger">{{ session.getFlash('errorUpdateUser') }}</div>
+                    {% endif %}
+                    <div class="card card-bordered">
+                        <div class="card-aside-wrap">
+                            <div class="card-content">
+                                <ul class="nav nav-tabs nav-tabs-mb-icon nav-tabs-card">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">
+                                            <em class="icon ni ni-user-circle"></em><span>Personal</span></a>
+                                    </li>
+                                </ul><!-- .nav-tabs -->
+                                <div class="card-inner">
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-sm nk-block-between">
+                                            <h5 class="title">Login Information</h5>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDefault">Edit user</button>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="profile-ud-list">
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">First Name</span>
+                                                    <span class="profile-ud-value">{{ user.first_name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Last Name</span>
+                                                    <span class="profile-ud-value">{{ user.last_name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Email Address</span>
+                                                    <span class="profile-ud-value">{{ user.email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Role</span>
+                                                    <span class="profile-ud-value">{{ user.role.name }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Status</span>
+                                                    <span class="profile-ud-value">
+                                                        <span class="badge badge-{{ user.status.code == '0' ? 'danger' : 'success' }}">{{ user.status.name }}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div><!-- .profile-ud-list -->
+                                    </div><!-- .nk-block -->
+                                    <div class="nk-block">
+                                        <div class="nk-block-head nk-block-head-line">
+                                            <h6 class="title overline-title text-base">Personal Information</h6>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="profile-ud-list">
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Address</span>
+                                                    <span class="profile-ud-value">{{ user.address }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Date of Birth</span>
+                                                    <span class="profile-ud-value">{{ user.birthday }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Gender</span>
+                                                    <span class="profile-ud-value">{{ user.gender }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="profile-ud-item">
+                                                <div class="profile-ud wider">
+                                                    <span class="profile-ud-label">Phone</span>
+                                                    <span class="profile-ud-value">0123456789</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- .profile-ud-list -->
+                                    </div><!-- .nk-block -->
+                                    <div class="nk-divider divider md"></div>
+                                    <!-- Modal Content Code -->
+                                    <div class="modal fade" tabindex="-1" id="modalDefault">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <em class="icon ni ni-cross"></em>
+                                                </a>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit user</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ redirect('admin/post-user-update') }}" method="post">
+                                                        <input type="text" hidden name="id" value="{{ user.id }}">
+                                                        <div class="card-inner">
+                                                            <div class="preview-block">
+                                                                <span class="preview-title-lg overline-title">Login Information</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="first-name">First Name</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control" name="first-name"
+                                                                                       id="first-name" placeholder="Enter First Name" value="{{ user.first_name }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="last-name">Last Name</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control" name="last-name" id="last-name"
+                                                                                       placeholder="Enter Last Name" value="{{ user.last_name }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="email">Email</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="email" class="form-control" name="email" id="email"
+                                                                                       placeholder="Enter Email" value="{{ user.email }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="password">Password</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="password" class="form-control" name="password"
+                                                                                       id="password" placeholder="Enter Password">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="password">Status</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <div class="custom-control custom-radio" >
+                                                                                    <input type="radio" id="inactive" name="status" value="0"
+                                                                                           class="custom-control-input" {{ user.status.code == '0' ? 'checked' : '' }}>
+                                                                                    <label class="custom-control-label" for="inactive">Inactive</label>
+                                                                                </div>
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" id="active" name="status" value="1"
+                                                                                           class="custom-control-input" {{ user.status.code == '1' ? 'checked' : '' }}>
+                                                                                    <label class="custom-control-label" for="active">Active</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="password" class="form-control" name="confirm-password"
+                                                                                       id="confirm-password" placeholder="Enter Confirm Password">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="role">Role</label>
+                                                                            <div class="form-control-wrap ">
+                                                                                <div class="form-control-select">
+                                                                                    <select class="form-control" name="role" id="role">
+                                                                                        <option value="3" {{ user.role.code == '3' ? 'selected' : '' }}>User</option>
+                                                                                        <option value="2" {{ user.role.code == '2' ? 'selected' : '' }}>Doctor</option>
+                                                                                        <option value="1" {{ user.role.code == '1' ? 'selected' : '' }}>Administrator</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="preview-hr">
+                                                                <span class="preview-title-lg overline-title">Personal information</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="birthday">Birthday</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="date" class="form-control" name="birthday" id="birthday"
+                                                                                       placeholder="Enter Birthday" value="{{ user.birthday }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="address">Address</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control" name="address" id="address"
+                                                                                       placeholder="Enter Address" value="{{ user.address }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="phone">Phone</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input type="text" class="form-control" name="phone" id="phone"
+                                                                                       placeholder="Enter Phone" value="{{ user.phone }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="password">Gender</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" id="nam" name="gender" value="Male"
+                                                                                           class="custom-control-input" {{ user.gender == 'Male' ? 'checked' : '' }}>
+                                                                                    <label class="custom-control-label" for="nam">Male</label>
+                                                                                </div>
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" id="nu" name="gender" value="Female"
+                                                                                           class="custom-control-input" {{ user.gender == 'Female' ? 'checked' : '' }}>
+                                                                                    <label class="custom-control-label" for="nu">Female</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="preview-hr">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <button type="submit" class="btn btn-success">Edit user</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer bg-light">
+                                                    <span class="sub-text">Modal Footer Text</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-content -->
+                            <div class="card-aside card-aside-right user-aside toggle-slide toggle-slide-right toggle-break-xxl toggle-screen-xxl"
+                                 data-content="userAside" data-toggle-screen="xxl" data-toggle-overlay="true"
+                                 data-toggle-body="true">
+                                <div class="card-inner-group" data-simplebar="init">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-height-auto-observer-wrapper">
+                                            <div class="simplebar-height-auto-observer"></div>
+                                        </div>
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                                     aria-label="scrollable content"
+                                                     style="height: auto; overflow: hidden;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                        <div class="card-inner">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar lg bg-primary">
+                                                                    <div style="background-image: url('{{ createLink('upload/avatars/') }}{{ user.avatar }}');" class="avatar-lg"></div>
+                                                                </div>
+                                                                <div class="user-info">
+                                                                    <div class="badge badge-outline-light badge-pill ucap">
+                                                                        {{ user.role.name }}
+                                                                    </div>
+                                                                    <h5>{{ user.full_name }}</h5>
+                                                                    <span class="sub-text">{{ user.email }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- .card-inner -->
+                                                        <div class="card-inner">
+                                                            <form action="{{ redirect('admin/post-update-avatar') }}" method="post" enctype="multipart/form-data">
+                                                                <input type="text" hidden name="user-id" value="{{ user.id }}">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="customFileLabel">Change avatar</label>
+                                                                    <div class="form-control-wrap">
+                                                                        <div class="custom-file">
+                                                                            <input type="file" class="custom-file-input" id="customFile" name="avatar-file">
+                                                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" align="center">
+                                                                    <div class="form-control-wrap">
+                                                                        <button type="submit" name="btn-submit" class="btn btn-secondary">Change Avatar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- .card-inner -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="simplebar-placeholder" style="width: auto; height: 819px;"></div>
+                                    </div>
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-aside -->
+                        </div><!-- .card-aside-wrap -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

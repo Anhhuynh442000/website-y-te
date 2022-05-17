@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>medical</title>
+		<!--Phần style, boostrap-->
+		{{ include('user/components/head.twig') }}
+
+	</head>
+
+	<body>
+		<!--::header part start::-->
+		{{ include('user/components/menu.twig')}}
+		<div class="container-fluid bg-light p-5 text-center my-3">
+			<h1 class="">Covid-19 Tracker</h1>
+			<h5 class="text-muted">An opensource project to keep track of all the COVID-19 cases around the world.</h5>
+		</div>
+
+		<div class="container my-5">
+			<div class="row text-center">
+				<div class="col-4 text-warning">
+					<h5>Confirmed</h5>
+					{{ total_confirmed }}
+				</div>
+				<div class="col-4 text-success">
+					<h5>Recovered</h5>
+					{{ total_recovered }}
+				</div>
+				<div class="col-4 text-danger">
+					<h5>Deceased</h5>
+					{{ total_deaths }}
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Countries</th>
+							<th scope="col">Confirmed</th>
+							<th scope="col">Recovered</th>
+							<th scope="col">Deceased</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tbody>
+
+						{% for key, value in data %}
+							{% set increase = value[days_count].confirmed - value[days_count_prev].confirmed %}
+							<tr>
+								<th scope="row">{{ key }}</th>
+								<td>
+									{{ value[days_count].confirmed }}
+									{% if increase != 0  %}
+										<small class="text-danger pl-3">
+											<i class="fas fa-arrow-up"></i>
+											{{ increase }}</small>
+									{% endif %}
+								</td>
+								<td>{{ value[days_count].recovered}}</td>
+								<td>{{ value[days_count].deaths}}</td>
+							</tr>
+                         
+						{% endfor %}
+					</tbody>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html></div><!-- footer part start-->{{ include('user/components/footer.twig')}}<!-- footer part end--></body></html>
